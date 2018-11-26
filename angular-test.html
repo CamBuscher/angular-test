@@ -7,23 +7,6 @@
     <script>
         //what if we want to convert this interaction into a markdown previewer?
         var app = angular.module("myapp", ['customFilters.markdown', 'customFilters.trust']);
-
-        angular.module('customFilters.markdown', [])
-            .filter('markdown', function() {
-                var converter = new Showdown.converter();
-                return function(input) {
-                    var html =converter.makeHtml(input || '');
-                    return html;
-                }
-            });
-            
-        angular.module('customFilters.trust', [])
-        	.filter('trust', function($sce) {
-        		return function(input) {
-        			return $sce.trustAsHtml(input || '')
-        		}
-        	})
-
     </script>
     </head>
     <body>
@@ -40,5 +23,6 @@
                 	<textarea>{{myText|markdown}}</textarea>
             </div>
         </section>
+        <script type="text/javascript" src="filters.js"></script>
     </body>
 </html>
