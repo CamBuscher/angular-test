@@ -5,23 +5,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script>
-        //what if we want to convert this interaction into a markdown previewer?
-        var app = angular.module("myapp", ['customFilters.markdown', 'customFilters.trust']);
+        //https://antjanus.com/blog/web-development-tutorials/front-end-development/comprehensive-beginner-guide-angularjs/
+        var app = angular.module("myapp", []);
+        
+        app.controller('CommentsController', function($scope) {
+        	$scope.comments = ['comment', 'comment2'];
+        });
     </script>
     </head>
     <body>
-        <section>
-            <div class="row">
-                <div class="col-6">
-                    <textarea ng-model="myText"></textarea>
-                </div>
-                <div class="col-6 last" ng-bind-html="myText|markdown|trust">
-                </div>
-                <div class='col-6'>
-                </div>
-                	<h2>Downloadable HTML</h2>
-                	<textarea>{{myText|markdown}}</textarea>
-            </div>
+        <section ng-view class='row'>
+      		<div>
+      			<div ng-controller='CommentsController'>
+      				<div class='feed-item'>
+	      				<p>Woooooooooooooooooooooooooooooooooooowwwwwwwwwwwwwww</p>
+	      				<ul class='list-meta'>
+	      					<li><a href='#'>comment</a></li>
+	      					<li><a href='#'>like</a></li>
+	      				</ul>
+      				</div>
+      				<div class='feed-comments'>
+      					<ul class='block-list comment-block'>
+      						<li ng-repeat='comment in comments'>
+      							{{ comment }}
+      						</li>
+      					</ul>
+      				</div>
+      			</div>
+      		</div>
         </section>
         <script type="text/javascript" src="filters.js"></script>
     </body>
