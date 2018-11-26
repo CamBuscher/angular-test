@@ -6,16 +6,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script>
         //what if we want to convert this interaction into a markdown previewer?
-        var app = angular.module("myapp", ['customFilters.markdown']);
+        var app = angular.module("myapp", ['customFilters.markdown', 'customFilters.trust']);
 
         angular.module('customFilters.markdown', [])
-            .filter('markdown', function($sce) {
+            .filter('markdown', function() {
                 var converter = new Showdown.converter();
                 return function(input) {
-                    var html = $sce.trustAsHtml(converter.makeHtml(input || ''));
+                    var html =converter.makeHtml(input || '');
                     return html;
                 }
             });
+            
+        angular.module('customFilters.trust', [])
+        	.filter('trust', function($sce) {
+        		return function(input) {
+        			return sce.trustAsHtml(input || '')
+        		}
+        	})
 
     </script>
     </head>
@@ -25,8 +32,12 @@
                 <div class="col-6">
                     <textarea ng-model="myText"></textarea>
                 </div>
-                <div class="col-6 last" ng-bind-html="myText|markdown">
+                <div class="col-6 last" ng-bind-html="myText|markdown|trust">
                 </div>
+                <div class='col-6'>
+                </div>
+                	<h2>Downloadable HTML</h2>
+                	<textarea>{{myText|markdown}}</textarea>
             </div>
         </section>
     </body>
